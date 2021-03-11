@@ -1,0 +1,30 @@
+.vscode
+notes.md
+venv/
+
+# package files
+autojoiner/**
+!autojoiner/__init__.py
+!autojoiner/__main__.py
+!autojoiner/autojoin.py
+!autojoiner/config_user.py
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
