@@ -1,4 +1,5 @@
 .vscode
+.pypirc
 notes.md
 venv/
 
