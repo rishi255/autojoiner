@@ -4,7 +4,7 @@ setup(
     name='autojoiner',
     packages=['autojoiner'],
     # description='',
-    version='2.0.4',
+    version='2.0.5',
     install_requires=[
         'click', 'pyautogui', 'selenium',
     ],
