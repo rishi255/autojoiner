@@ -4,9 +4,9 @@ setup(
     name='autojoiner',
     packages=['autojoiner'],
     # description='',
-    version='2.0',
+    version='2.0.3',
     install_requires=[
-        'click', 'pyautogui', 'selenium', 'setuptools-rust', 'cryptography'
+        'click', 'pyautogui', 'selenium',
     ],
     python_requires='>=3.8',
     entry_points='''
