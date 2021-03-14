@@ -4,7 +4,7 @@ setup(
     name='autojoiner',
     packages=['autojoiner'],
     # description='',
-    version='2.0.3',
+    version='2.0.4',
     install_requires=[
         'click', 'pyautogui', 'selenium',
     ],
@@ -16,7 +16,5 @@ setup(
     author="Rishikesh Rachchh",
     author_email="rishikeshrachchh@gmail.com",
     license='MIT',
-    url="https://github.com/rishi255/autojoin-v2",
-    download_url='https://github.com/rishi255/autojoin-v2/archive/v2.tar.gz',
-    # dependency_links=dependency_links
+    url="https://github.com/rishi255/autojoin-v2"
 )
