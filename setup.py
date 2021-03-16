@@ -4,9 +4,9 @@ setup(
     name='autojoiner',
     packages=['autojoiner'],
     # description='',
-    version='2.0.6',
+    version='0.0.1',
     install_requires=[
-        'click', 'pyautogui', 'selenium',
+        'click', 'PyAutoGUI', 'selenium',
     ],
     python_requires='>=3.8',
     entry_points='''
@@ -15,6 +15,11 @@ setup(
     ''',
     author="Rishikesh Rachchh",
     author_email="rishikeshrachchh@gmail.com",
+    classifiers = [
+        'Development Status :: 2 - Pre-Alpha',
+        'License :: OSI Approved :: MIT License',
+
+    ],
     license='MIT',
-    url="https://github.com/rishi255/autojoin-v2"
+    url="https://github.com/rishi255/autojoiner"
 )
