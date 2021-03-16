@@ -4,10 +4,14 @@ setup(
     name='autojoiner',
     packages=['autojoiner'],
     # description='',
-    version='0.0.2',
+    version='0.0.3',
     install_requires=[
-        'click', 'PyAutoGUI', 'selenium',
+        'click', 
+        'selenium',
     ],
+     extras_require={
+        'gui': ['PyAutoGUI'], # this doesn't exist on TestPyPi, hence creates issues -> Made it optional
+    },
     python_requires='>=3.8',
     entry_points='''
         [console_scripts]
