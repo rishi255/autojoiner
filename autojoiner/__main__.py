@@ -21,7 +21,7 @@ zoom_link_pattern = ""
 ############### CLICK FUNCTIONS ###############
 @click.group()
 def main():
-	"""Autojoiner-v2 CLI"""
+	"""Autojoiner CLI"""
 	pass
     
 @main.command()

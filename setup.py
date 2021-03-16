@@ -4,7 +4,7 @@ setup(
     name='autojoiner',
     packages=['autojoiner'],
     # description='',
-    version='0.0.3',
+    version='0.0.4',
     install_requires=[
         'click', 
         'selenium',
