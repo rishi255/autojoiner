@@ -5,5 +5,7 @@ def run_command_windows(cmd):
 	return std_out.decode('utf-8').split('\n'), std_err.decode('utf-8').split('\n')
 
 def run_command_linux(cmd):
-	# TODO define run_command_linux
-	raise NotImplementedError()
+	# TODO check if this works
+	output = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+	std_out, std_err = output.communicate()
+	return std_out.decode('utf-8').split('\n'), std_err.decode('utf-8').split('\n')
