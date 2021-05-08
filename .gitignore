@@ -1,6 +1,9 @@
 .vscode
+.bumpversion.cfg
 .pypirc
 notes.md
+*.sh
+venv*
 venv/
 
 # package files

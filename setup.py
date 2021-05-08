@@ -4,10 +4,14 @@ setup(
     name='autojoiner',
     packages=['autojoiner'],
     # description='',
-    version='2.0',
+    version='0.0.4',
     install_requires=[
-        'click', 'pyautogui', 'selenium', 'setuptools-rust', 'cryptography'
+        'click', 
+        'selenium',
     ],
+     extras_require={
+        'gui': ['PyAutoGUI'], # this doesn't exist on TestPyPi, hence creates issues -> Made it optional
+    },
     python_requires='>=3.8',
     entry_points='''
         [console_scripts]
@@ -15,8 +19,11 @@ setup(
     ''',
     author="Rishikesh Rachchh",
     author_email="rishikeshrachchh@gmail.com",
+    classifiers = [
+        'Development Status :: 2 - Pre-Alpha',
+        'License :: OSI Approved :: MIT License',
+
+    ],
     license='MIT',
-    url="https://github.com/rishi255/autojoin-v2",
-    download_url='https://github.com/rishi255/autojoin-v2/archive/v2.tar.gz',
-    # dependency_links=dependency_links
+    url="https://github.com/rishi255/autojoiner"
 )
