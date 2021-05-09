@@ -1,3 +1,21 @@
-# autojoin-v2
+# autojoiner
 
-A tool in Python to automate the joining of Zoom or Cisco Webex meetings at scheduled times.
+A CLI tool to automate the joining of Zoom or Cisco Webex meetings at scheduled times irrespective of operating system.
+
+Uses Selenium to automate the joining of meetings, and uses Task Scheduler or `schtasks` (Windows) / `crontab` (Linux) to schedule meetings.
+
+## Currently supported features
+
+- Schedule the joining of a meeting:  
+  `autojoiner add [--repeat-weekly] <meeting_link> <start date> <time to join> <task name>`  
+  where,
+
+  - start date is in format YYYY-MM-DD
+  - time is in format HH:mm
+
+- Immediately join a meeting (automated using Selenium):  
+  `autojoiner join <meeting_link>`
+
+## How to install
+
+[This package is hosted on PyPi](https://pypi.org/project/autojoiner/), which means installation as simple as running one command: `pip install autojoiner`
