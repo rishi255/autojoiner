@@ -1,11 +1,14 @@
-from invoke import task
 import platform
+from invoke import task
 
 
 @task
 def clean(c):
     if platform.system() == "Windows":
-        c.run("rmdir /s /q dist; rmdir /s /q build; rmdir /s /q autojoiner.egg-info")
+        c.run(
+            "for %f in (dist build autojoiner.egg-info) do if exist %f rmdir /s /q %f",
+            hide=True,
+        )
     else:
         c.run("rm -rf dist build autojoiner.egg-info")
     return
@@ -13,7 +16,7 @@ def clean(c):
 
 @task
 def make(c):
-    # clean(c)
+    clean(c)
     if platform.system() == "Windows":
         c.run("py setup.py sdist bdist_wheel")
     else:
@@ -24,7 +27,7 @@ def make(c):
 def upload(c, actual=False):
     if actual:
         print("ACTUAL CALLED!")
-        # c.run("twine upload dist/*")
+        c.run("twine upload dist/*")
     else:
         print("Test upload.")
         c.run("twine upload --repository-url https://test.pypi.org/legacy/ dist/*")
