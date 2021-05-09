@@ -73,8 +73,8 @@ def add(meeting_link, date, time, repeat_weekly, name):
             f'schtasks /query /fo CSV /tn "autojoin_tasks\\{name}"'
         )
 
-        print(f"stdout: {std_out}")
-        print(f"stderr: {std_err}")
+        # print(f"stdout: {std_out}")
+        # print(f"stderr: {std_err}")
 
         if "ERROR: " not in std_err[0].strip():
             raise click.ClickException("Task with that name already exists!")
@@ -83,8 +83,8 @@ def add(meeting_link, date, time, repeat_weekly, name):
 
             sc = "WEEKLY" if repeat_weekly else "ONCE"
             cmd = (
-                f"schtasks /create /sc {sc} /sd {datetime.strftime(datetime.now().date(), '%m/%d/%Y')} "
-                f"/st {date_time.strftime('%H:%M')} /tn \"autojoin_tasks\\{name}\" "
+                f"schtasks /create /sc {sc} /sd {datetime.strftime(date_time.date(), '%m/%d/%Y')} "
+                f"/d {get_weekday_code(date_time.weekday())} /st {date_time.strftime('%H:%M')} /tn \"autojoin_tasks\\{name}\" "
                 f"/tr \"powershell -Command autojoiner join '{meeting_link}'; exit;\" /f"
             )
 
@@ -130,21 +130,21 @@ def validate_link(text):
         return None
 
 
-# def get_weekday_code(dayno):
-#     if dayno == 0:
-#         return "MON"
-#     elif dayno == 1:
-#         return "TUE"
-#     elif dayno == 2:
-#         return "WED"
-#     elif dayno == 3:
-#         return "THU"
-#     elif dayno == 4:
-#         return "FRI"
-#     elif dayno == 5:
-#         return "SAT"
-#     elif dayno == 6:
-#         return "SUN"
+def get_weekday_code(dayno):
+    if dayno == 0:
+        return "MON"
+    elif dayno == 1:
+        return "TUE"
+    elif dayno == 2:
+        return "WED"
+    elif dayno == 3:
+        return "THU"
+    elif dayno == 4:
+        return "FRI"
+    elif dayno == 5:
+        return "SAT"
+    elif dayno == 6:
+        return "SUN"
 
 
 if __name__ == "__main__":
