@@ -1,3 +1,5 @@
+# these are needed only for the development environment, 
+# and are not actual dependencies.
 appdirs==1.4.4
 black==21.5b0
 bleach==3.3.0
