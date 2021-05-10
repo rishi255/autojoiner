@@ -1,19 +1,20 @@
+from os import path
 from setuptools import setup
+
+this_directory = path.abspath(path.dirname(__file__))
+with open(path.join(this_directory, "README.md"), encoding="utf-8") as f:
+    long_description = f.read()
 
 setup(
     name="autojoiner",
     packages=["autojoiner"],
-    # description='',
-    version="0.2.0",
+    description=long_description,
+    long_description_content_type="text/markdown",
+    version="0.2.1",
     install_requires=[
         "click",
         "selenium",
     ],
-    extras_require={
-        "gui": [
-            "PyAutoGUI"
-        ],  # this doesn't exist on TestPyPi, hence creates issues -> Made it optional
-    },
     python_requires=">=3.8",
     entry_points="""
         [console_scripts]
