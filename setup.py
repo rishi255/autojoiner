@@ -8,9 +8,9 @@ with open(path.join(this_directory, "README.md"), encoding="utf-8") as f:
 setup(
     name="autojoiner",
     packages=["autojoiner"],
-    description=long_description,
+    long_description=long_description,
     long_description_content_type="text/markdown",
-    version="0.2.1",
+    version="0.2.2",
     install_requires=[
         "click",
         "selenium",
