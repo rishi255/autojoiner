@@ -1,8 +1,8 @@
 # autojoiner
 
-[![PyPI version](https://img.shields.io/pypi/v/autojoiner?style=flat-square)](https://pypi.org/project/autojoiner)
-[![PyPI downloads](https://img.shields.io/pypi/dd/autojoiner?style=flat-square)](https://pypistats.org/packages/autojoiner)
-![PyPI license](https://img.shields.io/pypi/l/autojoiner?style=flat-square)
+[![PyPi version](https://img.shields.io/pypi/v/autojoiner?style=flat-square)](https://pypi.org/project/autojoiner)
+[![PyPi Downloads](https://pepy.tech/badge/autojoiner)](https://pepy.tech/project/autojoiner)
+![PyPi license](https://img.shields.io/pypi/l/autojoiner?style=flat-square)
 ![GitHub last commit](https://img.shields.io/github/last-commit/rishi255/autojoiner?style=flat-square)
 
 A CLI tool to automate the joining of Zoom or Cisco Webex meetings at scheduled times irrespective of operating system.
