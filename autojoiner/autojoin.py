@@ -13,19 +13,23 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
+from selenium_stealth import stealth
+
 from .__init__ import *
 
 TIMEOUT_PERIOD = 5
 
 # class URL is passed to this program somehow.
-def join_meeting(
+def join_webex_meeting(
     url: str,
     browser,
-    name_to_join_with,
-    email_to_join_with,
-    mute_before_join,
-    turn_off_video_before_join,
+    config_object,
 ):
+    name_to_join_with = config_object["name_to_join_with"]
+    email_to_join_with = config_object["email_to_join_with"]
+    mute_before_join = config_object["mute_before_join"]
+    turn_off_video_before_join = config_object["turn_off_video_before_join"]
+
     browser.get(url)
 
     WebDriverWait(browser, TIMEOUT_PERIOD).until(
@@ -68,7 +72,7 @@ def join_meeting(
 
     # press ALT+A to allow camera and mic permissions.
     print("Wait for 5 sec...")
-    time.sleep(5)
+    browser.implicitly_wait(5)
     # webdriver.ActionChains(browser).key_down(Keys.ALT).send_keys("a").key_up(
     #     Keys.ALT
     # ).perform()
@@ -117,7 +121,42 @@ def join_meeting(
         print("Can't find the Join meeting button either!. Something is wrong.")
 
 
-# TODO: remove "firefox" default argument from here because it's already the default in config.py, so lol
+#! CAN'T USE THIS FUNCTION ANYMORE.
+def join_google_meeting(
+    url: str,
+    browser,
+    config_object,
+):
+    def Glogin(mail_address, password):
+        # input Gmail
+        browser.get("https://accounts.google.com/")
+        browser.find_element_by_id("identifierId").send_keys(mail_address)
+        browser.find_element_by_id("identifierNext").click()
+        browser.implicitly_wait(10)
+
+        # input Password
+        browser.find_element_by_xpath(
+            '//*[@id="password"]/div[1]/div/div[1]/input'
+        ).send_keys(password)
+        browser.implicitly_wait(10)
+        browser.find_element_by_id("passwordNext").click()
+        browser.implicitly_wait(10)
+
+        # go to google home page
+        browser.get("https://google.com/")
+        browser.implicitly_wait(100)
+
+    gmail_address = config_object["gmail_address"]
+    gmail_password = config_object["gmail_password"]
+    mute_before_join = config_object["mute_before_join"]
+    turn_off_video_before_join = config_object["turn_off_video_before_join"]
+
+    Glogin(gmail_address, gmail_password)
+    browser.get(url)
+    browser.implicitly_wait(10)
+    browser.implicitly_wait(10)
+
+
 # TODO: implement browser "chrome"
 def start_browser(name):
     browser = None
@@ -146,34 +185,24 @@ def start_browser(name):
     if name == "chrome":
         options = webdriver.ChromeOptions()
         options.add_argument("--disable-popup-blocking")
+        options.add_experimental_option("useAutomationExtension", False)
         browser = webdriver.Chrome(chrome_options=options)
 
     return browser
 
 
-def get(config_obj, key):
-    return config_obj["autojoiner-config"].get(key, None)
+# def get(config_obj, key):
+#     return config_obj["autojoiner-config"].get(key, None)
 
 
 def main(url, meeting_platform, config_obj):
-    # at this point the config values are populated in the config file as well as config_obj.
-    print("Current config:")
-    for key, value in config_obj["autojoiner-config"].items():
-        print(f"{key:<26} -> {value}")
-
-    x = config_obj["autojoiner-config"]
-
-    name_to_join_with = x.get("name_to_join_with")
-    email_to_join_with = x.get("email_to_join_with")
-    mute_before_join = x.get("mute_before_join")
-    turn_off_video_before_join = x.get("turn_off_video_before_join")
-    browser_name = x.get("browser_name")
-    useless_download_directory = x.get("useless_download_directory")
-
     if meeting_platform == "webex":
-        browser = start_browser(browser_name)  # ! USES an option from config
+        x = config_obj[meeting_platform]
+        browser = start_browser(x["browser_name"])  # ! USES an option from config
         if browser is None:
-            print("Invalid 'browser_name' setting in config.py!")
+            print("Invalid 'browser_name' setting in ~/.autojoinerconf!")
+
+        useless_download_directory = x["useless_download_directory"]
 
         curr_os = platform.system()
         if curr_os == "Windows":
@@ -190,14 +219,18 @@ def main(url, meeting_platform, config_obj):
         # 	else,  just ignore as this part isn't very important anyway
         print("Cleared useless downloads")
 
-        join_meeting(
-            url,
-            browser,
-            name_to_join_with,
-            email_to_join_with,
-            mute_before_join,
-            turn_off_video_before_join,
+        join_webex_meeting(url, browser, config_obj["webex"])
+
+    elif meeting_platform == "meet":
+        raise NotImplementedError(
+            "Not supported due to security limitations for automated Google sign-in."
         )
+        # x = config_obj[meeting_platform]
+        # browser = start_browser(x["browser_name"])  # ! USES an option from config
+        # if browser is None:
+        #     print("Invalid 'browser_name' setting in ~/.autojoinerconf!")
+
+        # join_google_meeting(url, browser, config_obj["meet"])
 
     elif meeting_platform == "zoom":
         raise NotImplementedError("Autojoin-v2 doesn't work for Zoom yet!")

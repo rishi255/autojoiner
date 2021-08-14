@@ -36,7 +36,7 @@ def upload(c, actual=False):
 @task
 def bump(c, part="patch", actual=False):
     if actual:
-        c.run(f"bumpversion {part} --allow-dirty --verbose --commit --tag")
+        c.run(f"bumpversion {part} --allow-dirty --verbose")
         print("**** NOT A DRY RUN! Version actually bumped. **** ")
     else:
-        c.run(f"bumpversion {part} --allow-dirty --verbose --commit --tag --dry-run")
+        c.run(f"bumpversion {part} --allow-dirty --verbose --dry-run")

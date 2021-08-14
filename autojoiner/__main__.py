@@ -17,17 +17,25 @@ from .__init__ import *
 
 #! Link validation regex patterns
 webex_link_pattern = "(^.*[.]webex[.].*$)"
+meet_link_pattern = "(^https?://meet[.]google[.]com/.*$)"
 zoom_link_pattern = ""
 
 # default config options
 config_obj = configparser.ConfigParser()
-config_obj["autojoiner-config"] = {
+config_obj["webex"] = {
     "name_to_join_with": "User",
     "email_to_join_with": "",
     "mute_before_join": True,
     "turn_off_video_before_join": True,
     "browser_name": "firefox",
     "useless_download_directory": "",
+}
+config_obj["meet"] = {
+    "gmail_address": "",
+    "gmail_password": "",
+    "mute_before_join": True,
+    "turn_off_video_before_join": True,
+    "browser_name": "firefox",
 }
 
 ############### CLICK FUNCTIONS ###############
@@ -115,7 +123,21 @@ def join(meeting_link):
 
 @main.command()
 def info():
-    print(platform.system())
+    c = {section: dict(config_obj[section]) for section in config_obj.sections()}
+
+    cf = ""
+    for section, section_items in c.items():
+        cf += f"\t{section}:\n"
+        for key, value in section_items.items():
+            cf += f"\t\t{key} = {value}\n" if value != "" else f"\t\t{key}: [empty]\n"
+
+    x = f"""
+    Autojoiner-v2 CLI
+    Platform: {platform.system()}
+    Config file: 
+    {cf}
+    """
+    print(x)
 
 
 ############### OTHER FUNCTIONS ###############
@@ -124,6 +146,8 @@ def info():
 def validate_link(text):
     if bool(re.match(webex_link_pattern, text)):
         return "webex"
+    elif bool(re.match(meet_link_pattern, text)):
+        return "meet"
     elif bool(re.match(zoom_link_pattern, text)):
         return "zoom"
     else:
